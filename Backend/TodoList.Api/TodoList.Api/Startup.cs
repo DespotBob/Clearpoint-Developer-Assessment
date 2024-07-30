@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using TodoList.Api.Middleware;
 
 namespace TodoList.Api
 {
@@ -38,6 +41,7 @@ namespace TodoList.Api
             });
 
             services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoItemsDB"));
+            services.AddTransient<LocalExceptionHandlingMiddleware>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,10 +55,12 @@ namespace TodoList.Api
             }
 
             app.UseHttpsRedirection();
-
+            
             app.UseRouting();
 
             app.UseCors("AllowAllHeaders");
+
+            app.UseMiddleware<LocalExceptionHandlingMiddleware>();
 
             app.UseAuthorization();
 

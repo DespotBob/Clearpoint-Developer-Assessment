@@ -32,6 +32,7 @@ namespace TodoList.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTodoItem(Guid id)
         {
+            
             var result = await _context.TodoItems.FindAsync(id);
 
             if (result == null)
