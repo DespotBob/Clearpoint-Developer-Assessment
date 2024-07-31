@@ -1,12 +1,12 @@
 namespace TodoList.Api.IntegrationTests;
 
-public class TestGetEndpoints : IClassFixture<TestWebApplicationFactory<Startup>>
+public class Get_SimpleEndpoints : IClassFixture<TestGetWithInMemoryDB>
 {
-    private readonly TestWebApplicationFactory<Startup> _factory;
+    private readonly TestGetWithInMemoryDB _factory;
 
     private readonly HttpClient Client;
 
-    public TestGetEndpoints(TestWebApplicationFactory<Startup> factory)
+    public Get_SimpleEndpoints(TestGetWithInMemoryDB factory)
     {
         _factory = factory;
 
