@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using TodoList.Api.Entity;
+
 
 namespace TodoList.Api.IntegrationTests;
 
@@ -24,8 +26,6 @@ public class TestGetWithInMemoryDB : AbstractTestWebApplicationFactoryBuilder
                 {
                     options
                         .UseInMemoryDatabase(_dbName);
-
-                   // ConfigureServices(sp);
                 });
         });
 

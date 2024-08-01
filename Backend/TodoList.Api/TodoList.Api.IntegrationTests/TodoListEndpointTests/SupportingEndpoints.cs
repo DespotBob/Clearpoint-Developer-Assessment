@@ -1,12 +1,12 @@
-namespace TodoList.Api.IntegrationTests;
+namespace TodoList.Api.IntegrationTests.TodoListEndpointTests;
 
-public class Get_SimpleEndpoints : IClassFixture<TestGetWithInMemoryDB>
+public class SupportingEndpoints : IClassFixture<TestGetWithInMemoryDB>
 {
     private readonly TestGetWithInMemoryDB _factory;
 
     private readonly HttpClient Client;
 
-    public Get_SimpleEndpoints(TestGetWithInMemoryDB factory)
+    public SupportingEndpoints(TestGetWithInMemoryDB factory)
     {
         _factory = factory;
 
