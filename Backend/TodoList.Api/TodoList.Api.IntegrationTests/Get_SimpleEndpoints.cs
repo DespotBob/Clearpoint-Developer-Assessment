@@ -23,6 +23,6 @@ public class Get_SimpleEndpoints : IClassFixture<TestGetWithInMemoryDB>
         var response = await Client.GetAsync(url);
 
         // Then - A 200 OK status code is returned
-        response.EnsureSuccessStatusCode(); // Status Code 200-299
+        response.EnsureSuccessStatusCode();
     }
 }

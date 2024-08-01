@@ -41,7 +41,7 @@ namespace TodoList.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TodoList.Api", Version = "v1" });
             });
 
-            services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase($"TodoItemsDB{Guid.NewGuid()}"));
+            services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoItemsDB"));
             services.AddTransient<LocalExceptionHandlingMiddleware>();
         }
 
