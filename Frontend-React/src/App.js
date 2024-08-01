@@ -157,7 +157,7 @@ const App = () => {
             clearpoint.digital
           </a>
         </div>
-      </footer>
+      </footer> 
     </div>
   )
 }

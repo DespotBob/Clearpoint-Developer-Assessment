@@ -6,7 +6,6 @@ The application is a simple to-do list that allows a user to create items in a l
 The front end application uses a Microsoft Web API at the backend to facilitate using and persisting items in this to-do list.
 
 The repository includes a **React-based** as well as an **Angular-based** front end application. You can choose either of these frameworks to implement your changes.
-<br/>
 
 You are required to make changes to **both** the front end and back end.
 
@@ -23,5 +22,6 @@ You are asked to refactor the back end code in this solution. This code is in th
 Remember that maintainability and clarity is key in your solution.
 You are welcome to use comments in the code to outline any assumptions you might make and/or outline your thinking at various points.
 Once completed please push the completed solution to your own repo and send us the link.
-<br/><br/>
+
+
 We look forward to seeing your submission and have fun!
