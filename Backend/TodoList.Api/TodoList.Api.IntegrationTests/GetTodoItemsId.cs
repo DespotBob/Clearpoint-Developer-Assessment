@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Net;
-using TodoList.Api.Entity;
+using TodoList.Api.Entities;
 using Xunit.Abstractions;
 
 namespace TodoList.Api.IntegrationTests;

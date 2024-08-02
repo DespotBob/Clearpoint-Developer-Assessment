@@ -16,7 +16,10 @@ public class SupportingEndpoints : IClassFixture<TestGetWithInMemoryDB>
 
     [Theory]
     [InlineData("/api/todoitems")]
+    [InlineData("/scalar/v1")]
+    [InlineData("/openapi/v1.json")]
     [InlineData("/swagger/v1/swagger.json")]
+   
     public async Task Get_EndpointsReturnSuccessAndCorrectContentType(string url)
     {
         // When - A Get request is made to the url

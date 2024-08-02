@@ -3,9 +3,10 @@ using System;
 using Xunit;
 
 namespace TodoList.Api.UnitTests;
+
 public class ContractValidation
 {
-    public static Contract.TodoItemValidator uut = new TodoList.Api.Contract.TodoItemValidator();
+    public static Contract.PutValidator uut = new TodoList.Api.Contract.PutValidator();
 
     [Fact]
     public void TodoListValidator_Check01()
@@ -13,7 +14,7 @@ public class ContractValidation
         var t = new Contract.TodoItem()
         {
             Description = null,
-            Id = Guid.NewGuid().ToString(),
+            Id = Guid.NewGuid(),
             IsCompleted = true
         };
 
@@ -30,8 +31,8 @@ public class ContractValidation
         var t = new Contract.TodoItem()
         {
             Description = null,
-            Id = null,
-            IsCompleted = null
+            Id = Guid.Empty,
+            IsCompleted = false
         };
 
         uut.Validate(t).IsValid.ShouldBe(false);

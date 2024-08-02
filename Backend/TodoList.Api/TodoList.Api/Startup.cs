@@ -5,11 +5,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using TodoList.Api.Entity;
+using TodoList.Api.Entities;
 using TodoList.Api.Middleware;
 
 namespace TodoList.Api
 {
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -27,6 +28,8 @@ namespace TodoList.Api
                 app.UseDeveloperExceptionPage();
             }
 
+
+            
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TodoList.Api v1"));
 
@@ -43,12 +46,15 @@ namespace TodoList.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapScalarUi();  // https://localhost:5001/scalar/v1
+                endpoints.MapOpenApi();   // https://localhost:5001/openapi/v1.json
             });
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAllHeaders",
@@ -61,6 +67,7 @@ namespace TodoList.Api
             });
 
             services.AddControllers();
+            services.AddOpenApi();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "TodoList.Api", Version = "v1" });

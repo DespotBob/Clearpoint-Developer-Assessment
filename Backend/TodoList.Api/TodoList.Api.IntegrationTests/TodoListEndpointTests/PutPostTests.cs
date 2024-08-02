@@ -2,7 +2,7 @@
 using Xunit.Abstractions;
 using System.Net.Http.Json;
 using Microsoft.Extensions.DependencyInjection;
-using TodoList.Api.Entity;
+using TodoList.Api.Entities;
 
 namespace TodoList.Api.IntegrationTests.TodoListEndpointTests;
 
@@ -105,7 +105,7 @@ public partial class PutPostTests : IDisposable
     }
 
     [Fact]
-    public async Task Put_CanCreateANewEntity()
+    public async Task Put_CannotCreateANewEntity()
     {
         var localGuid = new Guid("8223036d-ab15-4af7-8539-121212121212");
 
@@ -121,15 +121,7 @@ public partial class PutPostTests : IDisposable
         _testOutputHelper.WriteLine(content);
 
         // Then - The expected Status Code is returned.
-        response.StatusCode.ShouldBe(HttpStatusCode.OK);
-
-        // Then - The body of the response should be the following JSON
-        content.ShouldBeJsonEquivalent(new
-        {
-            id = localGuid.ToString(),
-            description = "Item 11",
-            isCompleted = false
-        }, _testOutputHelper);
+        response.StatusCode.ShouldBe(HttpStatusCode.NotFound);
     }
 
 

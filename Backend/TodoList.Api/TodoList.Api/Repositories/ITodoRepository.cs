@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using TodoList.Api.Entity;
+using TodoList.Api.Entities;
 
 namespace TodoList.Api.Repositories;
 

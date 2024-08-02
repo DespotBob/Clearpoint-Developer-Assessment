@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using TodoList.Api.Entity;
+using TodoList.Api.Entities;
 
 
 namespace TodoList.Api.IntegrationTests;

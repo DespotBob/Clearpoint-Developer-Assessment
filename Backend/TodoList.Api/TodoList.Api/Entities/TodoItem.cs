@@ -1,5 +1,6 @@
 using System;
-namespace TodoList.Api.Entity;
+
+namespace TodoList.Api.Entities;
 
 public class TodoItem
 {

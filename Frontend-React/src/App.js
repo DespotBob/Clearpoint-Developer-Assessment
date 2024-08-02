@@ -1,20 +1,43 @@
 import './App.css'
 import { Image, Alert, Button, Container, Row, Col, Form, Table, Stack } from 'react-bootstrap'
 import React, { useState, useEffect } from 'react'
+import { TodoListApi } from './TodoListApi.js'
 
-const axios = require('axios')
+
+//const axios = require('axios')
 
 const App = () => {
   const [description, setDescription] = useState('')
   const [items, setItems] = useState([])
+  const [errors, setErrors] = useState([])
+
+  let todoApi = new TodoListApi();
 
   useEffect(() => {
-    // todo
+    setItems([]);
+    getItems();
   }, [])
 
   const renderAddTodoItemContent = () => {
     return (
       <Container>
+        
+          { errors.length > 0 ?
+            <>
+            <h2 className="warning">Errors</h2>
+            <table>
+              <tbody>
+                {errors.map((item) => (
+                    <tr key={item.propertyName+item.errorMessage}>
+                      <td>{item.propertyName}</td>
+                      <td>{item.errorMessage}</td>
+                    </tr>
+                ))}
+              </tbody>
+            </table>
+            </> : null 
+          }
+        
         <h1>Add Item</h1>
         <Form.Group as={Row} className="mb-3" controlId="formAddTodoItem">
           <Form.Label column sm="2">
@@ -31,7 +54,7 @@ const App = () => {
         </Form.Group>
         <Form.Group as={Row} className="mb-3 offset-md-2" controlId="formAddTodoItem">
           <Stack direction="horizontal" gap={2}>
-            <Button variant="primary" onClick={() => handleAdd()}>
+            <Button variant="primary" onClick={() => handleAdd(description)}>
               Add Item
             </Button>
             <Button variant="secondary" onClick={() => handleClear()}>
@@ -48,9 +71,11 @@ const App = () => {
       <>
         <h1>
           Showing {items.length} Item(s){' '}
-          <Button variant="primary" className="pull-right" onClick={() => getItems()}>
+          {/*
+             Automatically refreshes now..
+            <Button variant="primary" className="pull-right" onClick={() => getItems()}>
             Refresh
-          </Button>
+          </Button> */}
         </h1>
 
         <Table striped bordered hover>
@@ -80,23 +105,32 @@ const App = () => {
   }
 
   const handleDescriptionChange = (event) => {
-    // todo
+    setDescription(event.target.value);
   }
 
   async function getItems() {
+
     try {
-      alert('todo')
-    } catch (error) {
-      console.error(error)
-    }
+        var items = await todoApi.Get()
+        setItems(items);
+      } catch (errorResponse) {
+        console.error(errorResponse);
+        setErrors(errorResponse.errors);
+        setItems([]);
+      }
   }
 
-  async function handleAdd() {
+  async function handleAdd(description) {
     try {
-      alert('todo')
-    } catch (error) {
-      console.error(error)
+      setErrors([]);
+      await todoApi.Post(description)
+
+    } catch (errorResponse) {
+      console.error(errorResponse);
+      setErrors(errorResponse.errors);
     }
+
+    await getItems();
   }
 
   function handleClear() {
@@ -105,10 +139,14 @@ const App = () => {
 
   async function handleMarkAsComplete(item) {
     try {
-      alert('todo')
-    } catch (error) {
-      console.error(error)
+      await todoApi.MarkAsComplete(item.id);
+
+    } catch (errorResponse) {
+      console.error(errorResponse)
+      setErrors(errorResponse.errors);
     }
+
+    await getItems();
   }
 
   return (
@@ -138,6 +176,10 @@ const App = () => {
                   API in the UI
                 </li>
                 <li>Feel free to add unit tests and refactor the component(s) as best you see fit</li>
+
+                <li>The ability to surface any errors from the backend API in the UI</li>
+                <li>The ability to mark an item in the to-do list as complete</li>
+                <li>Add unit tests to cover the new functionality using a framework of your choice</li>
               </ol>
             </Alert>
           </Col>
@@ -157,7 +199,7 @@ const App = () => {
             clearpoint.digital
           </a>
         </div>
-      </footer> 
+      </footer>
     </div>
   )
 }
