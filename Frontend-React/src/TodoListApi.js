@@ -2,9 +2,12 @@
 
 export class TodoListApi 
 {
+    #baseUrl;
+
     constructor()
     {
-
+        // Using HTTP Localhost:5000 as this aligns with the Docker container.
+        this.#baseUrl = 'http://localhost:5000';
     }
 
    CreateError(propertyName, errorMessage )
@@ -19,7 +22,7 @@ export class TodoListApi
         return error;
    }
 
-   CreateErrorFromRepsonse(response)
+   CreateErrorFromResponse(response)
    {
         const error = new Error("Validation Error");
 
@@ -30,11 +33,11 @@ export class TodoListApi
 
     // Returns a JSON.
     async Get() {
-        var response = await fetch('https://localhost:5001/api/TodoItems');
+        var response = await fetch(`${this.#baseUrl}/api/TodoItems`);
 
         if(!response.ok)
         {
-            throw this.CreateErrorFromRepsonse(await response.json());
+            throw this.CreateErrorFromResponse(await response.json());
         }
 
         var response = response.json();
@@ -45,7 +48,7 @@ export class TodoListApi
     }
 
     async Post( descriptionString ) {
-        var response = await fetch('https://localhost:5001/api/TodoItems', {
+        var response = await fetch(`${this.#baseUrl}/api/TodoItems`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -60,7 +63,7 @@ export class TodoListApi
 
         if( response.status==400)
         {
-            throw this.CreateErrorFromRepsonse( body );
+            throw this.CreateErrorFromResponse( body );
         }
 
         if(!response.ok)
@@ -73,7 +76,7 @@ export class TodoListApi
 
     async MarkAsComplete( uuid ) {
         
-        var response = await fetch(`https://localhost:5001/api/TodoItems/${uuid}/markascomplete`, {
+        var response = await fetch(`${this.#baseUrl}/api/TodoItems/${uuid}/markascomplete`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -82,7 +85,7 @@ export class TodoListApi
 
         if(!response.ok)
         {
-            throw new Error("Failed","Unable to mark as complete");
+            throw this.CreateError("Failed","Unable to mark as complete");
         }
     }
 }

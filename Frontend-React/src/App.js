@@ -1,7 +1,8 @@
 import './App.css'
-import { Image, Alert, Button, Container, Row, Col, Form, Table, Stack } from 'react-bootstrap'
+import { Image, Alert, Button, Container, Row, Col, Form, Table, Stack, ToastContainer } from 'react-bootstrap'
 import React, { useState, useEffect } from 'react'
 import { TodoListApi } from './TodoListApi.js'
+import Toast from 'react-bootstrap/Toast';
 
 
 //const axios = require('axios')
@@ -10,6 +11,10 @@ const App = () => {
   const [description, setDescription] = useState('')
   const [items, setItems] = useState([])
   const [errors, setErrors] = useState([])
+
+  const [showError, setShowErrors] = useState(true);
+
+  const toggleShowError = () => setShowErrors(!showError);
 
   let todoApi = new TodoListApi();
 
@@ -24,17 +29,25 @@ const App = () => {
         
           { errors.length > 0 ?
             <>
-            <h2 className="warning">Errors</h2>
-            <table>
-              <tbody>
-                {errors.map((item) => (
-                    <tr key={item.propertyName+item.errorMessage}>
-                      <td>{item.propertyName}</td>
-                      <td>{item.errorMessage}</td>
-                    </tr>
-                ))}
-              </tbody>
-            </table>
+            <ToastContainer className='bottom-end'>
+               <Toast show={showError} onClose={toggleShowError}>
+                <Toast.Header>
+                  <h2 className="warning"  color="Red" >Errors</h2>
+                </Toast.Header>
+                <Toast.Body>
+                  <table>
+                    <tbody>
+                      {errors.map((item) => (
+                          <tr key={item.propertyName+item.errorMessage}>
+                            <td className='b'>{item.propertyName}</td>
+                            <td>{item.errorMessage}</td>
+                          </tr>
+                      ))}
+                    </tbody>
+                  </table>
+              </Toast.Body>
+            </Toast>
+            </ToastContainer>
             </> : null 
           }
         
@@ -116,18 +129,19 @@ const App = () => {
       } catch (errorResponse) {
         console.error(errorResponse);
         setErrors(errorResponse.errors);
+        setShowErrors(true);
         setItems([]);
       }
   }
 
   async function handleAdd(description) {
     try {
-      setErrors([]);
       await todoApi.Post(description)
-
+      setErrors([]);
     } catch (errorResponse) {
       console.error(errorResponse);
       setErrors(errorResponse.errors);
+      setShowErrors(true);
     }
 
     await getItems();
@@ -140,10 +154,11 @@ const App = () => {
   async function handleMarkAsComplete(item) {
     try {
       await todoApi.MarkAsComplete(item.id);
-
+      setErrors([]);
     } catch (errorResponse) {
       console.error(errorResponse)
       setErrors(errorResponse.errors);
+      setShowErrors(true);
     }
 
     await getItems();
@@ -176,10 +191,6 @@ const App = () => {
                   API in the UI
                 </li>
                 <li>Feel free to add unit tests and refactor the component(s) as best you see fit</li>
-
-                <li>The ability to surface any errors from the backend API in the UI</li>
-                <li>The ability to mark an item in the to-do list as complete</li>
-                <li>Add unit tests to cover the new functionality using a framework of your choice</li>
               </ol>
             </Alert>
           </Col>
