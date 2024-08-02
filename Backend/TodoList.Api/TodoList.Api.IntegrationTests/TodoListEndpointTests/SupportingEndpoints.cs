@@ -18,7 +18,6 @@ public class SupportingEndpoints : IClassFixture<TestGetWithInMemoryDB>
     [InlineData("/api/todoitems")]
     [InlineData("/scalar/v1")]
     [InlineData("/openapi/v1.json")]
-    [InlineData("/swagger/v1/swagger.json")]
    
     public async Task Get_EndpointsReturnSuccessAndCorrectContentType(string url)
     {
@@ -27,5 +26,16 @@ public class SupportingEndpoints : IClassFixture<TestGetWithInMemoryDB>
 
         // Then - A 200 OK status code is returned
         response.EnsureSuccessStatusCode();
+    }
+
+    [Theory]
+    [InlineData("/swagger/v1/swagger.json")]
+    public async Task Get_CheckTheseEndpointsHaveBeenRemoved(string url)
+    {
+        // When - A Get request is made to the url
+        var response = await Client.GetAsync(url);
+
+        // Then - A 200 OK status code is returned
+        response.StatusCode.ShouldBe(System.Net.HttpStatusCode.NotFound);
     }
 }

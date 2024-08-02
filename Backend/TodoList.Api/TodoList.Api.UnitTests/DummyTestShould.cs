@@ -1,14 +1,12 @@
 using Shouldly;
 using Xunit;
 
-namespace TodoList.Api.UnitTests
+namespace TodoList.Api.UnitTests;
+public class DummyTestShouldly
 {
-    public class DummyTestShould
+    [Fact]
+    public void TestShouldlyIsInstalled()
     {
-        [Fact]
-        public void Test_Shouldly_IsInstalled()
-        {
-            true.ShouldBe(true);
-        }
+        true.ShouldBe(true);
     }
 }

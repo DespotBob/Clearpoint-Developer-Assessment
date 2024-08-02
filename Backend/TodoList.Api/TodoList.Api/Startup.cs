@@ -27,20 +27,11 @@ namespace TodoList.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
-
             
-            app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TodoList.Api v1"));
-
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseCors("AllowAllHeaders");
-
             app.UseMiddleware<LocalExceptionHandlingMiddleware>();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -68,11 +59,6 @@ namespace TodoList.Api
 
             services.AddControllers();
             services.AddOpenApi();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TodoList.Api", Version = "v1" });
-            });
-
             services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoItemsDB"));
             services.AddTransient<LocalExceptionHandlingMiddleware>();
             services.AddTransient<Repositories.ITodoRepository, Repositories.TodoRepository>();

@@ -162,11 +162,22 @@ public partial class PutPostTests : IDisposable
                 isCompleted = false
             });
 
-        string message = await response.Content.ReadAsStringAsync();
-        _testOutputHelper.WriteLine(message);
+        string content = await response.Content.ReadAsStringAsync();
+        _testOutputHelper.WriteLine(content);
 
         response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
-        message.ShouldBe("Description already exists");
+
+        content.ShouldBeJsonEquivalent(new
+        {
+            errors = new[]
+            {
+                new
+                {
+                    propertyName = "Description",
+                    errorMessage = "A Todo item with that name already exists",
+                }
+            },
+        }, _testOutputHelper);
     }
 
     [Fact]
@@ -177,7 +188,7 @@ public partial class PutPostTests : IDisposable
             new
             {
                 id = "",
-                description = "Item1",
+                description = "",
                 isCompleted = false
             });
 
@@ -186,18 +197,16 @@ public partial class PutPostTests : IDisposable
 
         response.StatusCode.ShouldBe(HttpStatusCode.BadRequest);
 
-        content.ShouldBeJsonEquivalent(new[]
+        content.ShouldBeJsonEquivalent(new
         {
-            new
-            {
-                propertyName = "Id",
-                errorMessage = "Must be supplied",
+            errors = new[]
+            { 
+                new
+                {
+                    propertyName = "Description",
+                    errorMessage = "'Description' must not be empty.",
+                }
             },
-            new
-            {
-                propertyName = "Id",
-                errorMessage = "Must be a valid Guid",
-            }
         }, _testOutputHelper);
 
     }
