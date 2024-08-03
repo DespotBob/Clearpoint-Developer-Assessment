@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TodoList.Api.Contract;
+namespace TodoList.Api.OpenApiContracts;
 
 public class ErrorResponse
 {

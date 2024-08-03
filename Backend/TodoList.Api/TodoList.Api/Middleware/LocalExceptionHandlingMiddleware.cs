@@ -1,30 +1,33 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Build.Framework;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
-namespace TodoList.Api.Middleware
-{
-    public class LocalExceptionHandlingMiddleware : IMiddleware
-    {
-        private readonly ILogger<LocalExceptionHandlingMiddleware> _logger;
+namespace TodoList.Api.Middleware;
 
-        public LocalExceptionHandlingMiddleware(ILogger<LocalExceptionHandlingMiddleware> logger)
+public class LocalExceptionHandlingMiddleware : IMiddleware
+{
+    private readonly ILogger<LocalExceptionHandlingMiddleware> _logger;
+
+    public LocalExceptionHandlingMiddleware(ILogger<LocalExceptionHandlingMiddleware> logger)
+    {
+        _logger = logger;
+    }
+
+    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+    {
+        try
         {
-            _logger = logger;
+            await next(context);
         }
-        public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+        catch (System.Exception ex)
         {
-            try
-            {
-                await next(context);
-            }
-            catch (System.Exception ex)
-            {
-                _logger.LogError(ex, ex.Message);
-                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
-                await context.Response.WriteAsync("An unexpected fault happened. Try again later.");
-            }
+            _logger.LogError(ex, ex.Message);
+
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+
+            _logger.LogError("Error {Message} {Exception}", ex.Message, ex);
+
+            await context.Response.WriteAsync("An unexpected fault happened. Try again later.");
         }
     }
 }

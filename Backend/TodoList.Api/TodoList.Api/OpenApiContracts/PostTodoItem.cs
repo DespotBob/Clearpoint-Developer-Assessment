@@ -1,6 +1,6 @@
 ﻿using Microsoft.Build.Framework;
 
-namespace TodoList.Api.Contract;
+namespace TodoList.Api.OpenApiContracts;
 
 public class PostTodoItem
 {

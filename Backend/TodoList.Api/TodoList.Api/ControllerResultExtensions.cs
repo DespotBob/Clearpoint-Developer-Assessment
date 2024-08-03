@@ -9,10 +9,10 @@ public static class ControllerResultExtensions
     public static BadRequestObjectResult ToBadResult(this ValidationResult validationResult)
     {
         var errors = validationResult.Errors
-            .Select(e => new Contract.Error { PropertyName = e.PropertyName, ErrorMessage= e.ErrorMessage})
+            .Select(e => new OpenApiContracts.Error { PropertyName = e.PropertyName, ErrorMessage= e.ErrorMessage})
             .ToList();
 
-        return new BadRequestObjectResult(new Contract.ErrorResponse()
+        return new BadRequestObjectResult(new OpenApiContracts.ErrorResponse()
         {
             Errors = errors
         });

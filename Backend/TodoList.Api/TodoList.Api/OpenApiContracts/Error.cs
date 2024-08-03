@@ -1,4 +1,5 @@
-﻿namespace TodoList.Api.Contract;
+﻿namespace TodoList.Api.OpenApiContracts
+    ;
 
 public class Error
 {

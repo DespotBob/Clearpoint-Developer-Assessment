@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace TodoList.Api.IntegrationTests;
+namespace TodoList.Api.IntegrationTests.TestInfrastructure;
 
 public abstract class AbstractTestWebApplicationFactoryBuilder : WebApplicationFactory<Startup>
 {
@@ -10,7 +10,7 @@ public abstract class AbstractTestWebApplicationFactoryBuilder : WebApplicationF
 
     public HttpClient CreateScopedClient()
     {
-        if( _scope == null)
+        if (_scope == null)
         {
             _scope = Services.CreateScope();
         }

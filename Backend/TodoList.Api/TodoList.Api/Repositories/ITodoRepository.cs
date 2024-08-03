@@ -13,12 +13,12 @@ public interface ITodoRepository
     /// <param name="description"></param>
     /// <returns></returns>
     /// 
-    Task<bool> TodoItemDescriptionExists(string description);
+    Task<bool> TodoItemDescriptionExistsAsync(string description);
 
     /// <summary>
     /// No Tracking query to find a TodoItem by Id
     /// </summary>
-    Task<bool> TodoItemIdExists(Guid id);
+    Task<bool> TodoItemIdExistsAsync(Guid id);
 
     /// <summary>
     /// Find a TodoItem by Id
@@ -36,7 +36,7 @@ public interface ITodoRepository
     /// <summary>
     /// No tracking query to find a TodoItem by Id
     /// </summary>
-    public Task<TodoItem> Find(Guid id);
+    public Task<TodoItem> FindAsync(Guid id);
 
 
     Task SaveChangesAsync();

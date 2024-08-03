@@ -3,9 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using TodoList.Api.Entities;
+using TodoList.Api.IntegrationTests.TestInfrastructure;
 
 
-namespace TodoList.Api.IntegrationTests;
+namespace TodoList.Api.IntegrationTests.TodoListEndpointTests;
 
 public class TestGetWithInMemoryDB : AbstractTestWebApplicationFactoryBuilder
 {

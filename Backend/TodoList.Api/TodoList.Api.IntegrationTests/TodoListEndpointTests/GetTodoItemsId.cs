@@ -3,7 +3,7 @@ using System.Net;
 using TodoList.Api.Entities;
 using Xunit.Abstractions;
 
-namespace TodoList.Api.IntegrationTests;
+namespace TodoList.Api.IntegrationTests.TodoListEndpointTests;
 
 public partial class GetTodoItemsId : IDisposable
 {

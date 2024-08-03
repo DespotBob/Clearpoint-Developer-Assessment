@@ -1,18 +1,20 @@
 ﻿using Shouldly;
 using Xunit;
 
+using TodoList.Api.OpenApiContracts;
+
 namespace TodoList.Api.UnitTests;
 
 public partial class ContractValidation
 {
     public class PostValidatorTests
     {
-        public static Contract.PostTodoItemValidator uut = new TodoList.Api.Contract.PostTodoItemValidator();
+        public static PostTodoItemValidator uut = new PostTodoItemValidator();
 
         [Fact]
         public void TodoListValidator_Check01()
         {
-            var t = new Contract.PostTodoItem()
+            var t = new PostTodoItem()
             {
                 Description = null,
             };
@@ -27,7 +29,7 @@ public partial class ContractValidation
         [Fact]
         public void TodoListValidator_Check02()
         {
-            var t = new Contract.PostTodoItem()
+            var t = new PostTodoItem()
             {
                 Description = "",
             };

@@ -105,7 +105,7 @@ public partial class PutPostTests : IDisposable
     }
 
     [Fact]
-    public async Task Put_CannotCreateANewEntity()
+    public async Task Put_WillNotCreateANewEntity()
     {
         var localGuid = new Guid("8223036d-ab15-4af7-8539-121212121212");
 
@@ -147,6 +147,7 @@ public partial class PutPostTests : IDisposable
         // Then - The body of the response should be the following JSON
 
         // TODO: Check the shape of the 400 body.
+        // Should be something similar to https://tools.ietf.org/html/rfc9110#section-15.5.5,
     }
 
 

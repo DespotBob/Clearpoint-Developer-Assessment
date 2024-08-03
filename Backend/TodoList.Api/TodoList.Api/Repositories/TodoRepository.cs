@@ -24,20 +24,20 @@ public class TodoRepository : ITodoRepository
 
 
     /// <inheritdoc/>
-    public Task<bool> TodoItemIdExists(Guid id)
-        => _context.TodoItems
+    public async Task<bool> TodoItemIdExistsAsync(Guid id)
+        => await _context.TodoItems
             .AsNoTracking()
             .AnyAsync(x => x.Id == id);
 
     /// <inheritdoc/>
-    public Task<bool> TodoItemDescriptionExists(string description)
-        => _context.TodoItems
+    public async Task<bool> TodoItemDescriptionExistsAsync(string description)
+        => await _context.TodoItems
             .AsNoTracking()
             .AnyAsync(x => x.Description.ToLowerInvariant() == description.ToLowerInvariant() && !x.IsCompleted);
 
     /// <inheritdoc/>
-    public Task<TodoItem> Find(Guid id)
-        =>_context.TodoItems
+    public async Task<TodoItem> FindAsync(Guid id)
+        => await _context.TodoItems
             .FirstOrDefaultAsync(x => x.Id == id);
 
     /// <inheritdoc/>
@@ -56,7 +56,7 @@ public class TodoRepository : ITodoRepository
         return entity;
     }
 
-    public Task SaveChangesAsync()
-        => _context.SaveChangesAsync();
+    public async Task SaveChangesAsync()
+        => await _context.SaveChangesAsync();
     
 }
